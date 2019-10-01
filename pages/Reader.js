@@ -26,8 +26,6 @@ export default class extends Component {
     componentDidUpdate(){
         this.scanner.reactivate();
     }
-
-   
     
     componentWillMount() {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
@@ -38,7 +36,6 @@ export default class extends Component {
     }
     
     handleBackButtonClick() {
-        console.log("ddd");
         this.props.history.goBack();
         return true;
     }

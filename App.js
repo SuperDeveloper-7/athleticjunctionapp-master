@@ -17,6 +17,7 @@ import {post} from "./Request";
 import Text from "./components/Text";
 import Animate from "./components/Animate";
 import UserWebView from "./pages/UserWebView";
+import Instagram from "./pages/Instagram";
 
 
 
@@ -114,23 +115,31 @@ export default class extends Component {
                     <Text size={18} style={{paddingTop:15,paddingLeft:20}}>ATHLETIC JUNCTION EVENTS</Text>
                 </Animate>
 
-                <TouchableOpacity onPress={()=>this.setState({promoter:true})} style={{backgroundColor: 'rgba(255,255,255,.02)', padding: 10, borderWidth: 1, borderColor: 'white',margin:30}}>
+                <TouchableOpacity onPress={()=>this.setState({promoter:'Login'})} style={{backgroundColor: 'rgba(255,255,255,.02)', padding: 10, borderWidth: 1, borderColor: 'white',margin:30}}>
                     <View>
                         <Text style={{color: 'white', textAlign: 'center', fontWeight: '800'}}>Are you scanning tickets?</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=>this.setState({promoter:false})} style={{backgroundColor: 'rgba(255,255,255,.02)', padding: 10, borderWidth: 1, borderColor: 'white',margin:30}}>
+                <TouchableOpacity onPress={()=>this.setState({promoter:'UseWebView'})} style={{backgroundColor: 'rgba(255,255,255,.02)', padding: 10, borderWidth: 1, borderColor: 'white',margin:30}}>
                     <View>
                         <Text style={{color: 'white', textAlign: 'center', fontWeight: '800'}}>Looking to buy tickets?</Text>
                     </View>
                 </TouchableOpacity>
+                <TouchableOpacity onPress={()=>this.setState({promoter:'Instagram'})} style={{backgroundColor: 'rgba(255,255,255,.02)', padding: 10, borderWidth: 1, borderColor: 'white',margin:30}}>
+                    <View>
+                        <Text style={{color: 'white', textAlign: 'center', fontWeight: '800'}}>View Instagrams</Text>
+                    </View>
+                </TouchableOpacity>
+
             </Gradient>
         }
 
-        if(this.state.promoter === false){
+        if(this.state.promoter === 'UseWebView'){
             return <UserWebView goBack={()=>this.setState({promoter:null})}/>;
         }
-
+        else if(this.state.promoter === 'Instagram'){
+            return <Instagram goBack={()=>this.setState({promoter:null})}/>;
+        }
         return <NativeRouter >
             <Gradient style={{flex: 1}}>
                 {this.state.expired ? <View style={{backgroundColor: 'black', padding: 20}}>
@@ -143,6 +152,7 @@ export default class extends Component {
                 <Route exact path="/forgot" render={(props) => <Forgot {...this.state} {...props}/>}/>
                 <Route exact path="/recover" render={(props) => <Recover {...this.state} {...props}/>}/>
                 <Route exact path="/register" render={(props) => <Register {...this.state} {...props}/>}/>
+                <Route exact path="/instagram" render = {(props)=><Instagram {...props} goBack={()=>this.setState({promoter:null})}/>}/>
                 <Route exact path="/scan" render={(props) =>
                     <LogoutOnExpiration {...this.state} interval={this.refreshInterval} {...props}>
                         <Scan  {...this.state} {...props} changeEvent={this.changeEvent}/>
